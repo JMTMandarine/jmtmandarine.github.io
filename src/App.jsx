@@ -5,27 +5,28 @@ function App() {
     couple: {
       groom: '태형',
       bride: '주리',
-      groomFull: '이태형',
+      groomFull: '김태형',
       brideFull: '최주리',
     },
     date: '2026년 10월 3일 (토) 오후 5시 00분',
     venue: {
-      name: '로마옥 리버사이드',
-      address: '경기 남양주시 강변북로632번길 16-13',
+      name: '로마노 리버사이드',
+      address: '경기 남양주시 강변북로 632번길 16-13',
       guide: '주차 1시간 무료 · 공영 주차장 이용',
     },
     message:
       '서로의 하루를 가장 다정한 온도로 채워가겠습니다. 저희의 시작을 따뜻하게 축복해 주세요.',
     family: {
-      groomParents: '아들 태형',
-      brideParents: '딸 주리',
+      groomParents: '신랑 태형',
+      brideParents: '신부 주리',
       invite:
         '소중한 분들을 모시고 사랑의 서약을 나누려 합니다. 기쁜 마음으로 함께해 주세요.',
     },
+    friends: ['한솔', '김지훈', '최태영', '성태진', '마담뚜-최한진', '최유리'],
     timeline: [
       { title: '예식 시작', detail: '오후 5시 00분' },
       { title: '식순 안내', detail: '신랑 입장 → 신부 입장 → 성혼 선언' },
-      { title: '피로연', detail: '1층 야외 · 실내 (예식 동시 진행)' },
+      { title: '피로연', detail: '1층 옥외 및 실내 (예식 동시 진행)' },
     ],
     gallery: [
       '우리의 가장 빛나는 순간을 담았습니다.',
@@ -37,7 +38,7 @@ function App() {
       bride: '신부 010-9865-4321',
     },
     account: {
-      groom: '국민 111-111-111111 이태형',
+      groom: '국민 111-111-111111 김태형',
       bride: '신한 222-222-222222 최주리',
     },
     share: {
@@ -69,15 +70,16 @@ function App() {
         <p className="section-text">{content.family.brideParents}</p>
         <p className="section-note">{content.family.invite}</p>
       </section>
-	  
-	  <section className="section family">
+
+      <section className="section friends">
         <h2 className="section-title">친구들</h2>
-        <p className="section-text">한솔</p>
-		<p className="section-text">김지훈</p>
-		<p className="section-text">최태영</p>
-		<p className="section-text">정태진</p>
-        <p className="section-text">마담뚜 - 최한진</p>
-        <p className="section-text">최유리</p>
+        <div className="friends-grid">
+          {content.friends.map((name) => (
+            <p className="section-text" key={name}>
+              {name}
+            </p>
+          ))}
+        </div>
       </section>
 
       <section className="section gallery">

@@ -210,6 +210,11 @@
   font-weight: 500;
 }
 
+.friends-grid {
+  display: grid;
+  gap: 8px;
+}
+
 .share {
   text-align: center;
   background: linear-gradient(160deg, #fef7f1 0%, #f5e7dd 100%);
