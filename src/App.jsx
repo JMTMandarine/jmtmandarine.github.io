@@ -69,6 +69,16 @@ function App() {
         <p className="section-text">{content.family.brideParents}</p>
         <p className="section-note">{content.family.invite}</p>
       </section>
+	  
+	  <section className="section family">
+        <h2 className="section-title">친구들</h2>
+        <p className="section-text">한솔</p>
+		<p className="section-text">김지훈</p>
+		<p className="section-text">최태영</p>
+		<p className="section-text">정태진</p>
+        <p className="section-text">마담뚜 - 최한진</p>
+        <p className="section-text">최유리</p>
+      </section>
 
       <section className="section gallery">
         <h2 className="section-title">갤러리</h2>
