@@ -1,36 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Noto+Serif+KR:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600&display=swap');
 
-:root {
-  --display: 'Libre Baskerville', serif;
-  --serif: 'Noto Serif KR', serif;
-  --ink: #3b2f2a;
-  --ink-strong: #2c211d;
-  --ink-muted: #7a6a63;
-  --accent: #a5643f;
-  --paper: #fffdfb;
-  --shadow-soft: 0 18px 30px rgba(90, 63, 48, 0.12);
-  --shadow-lite: 0 10px 22px rgba(90, 63, 48, 0.1);
-}
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  font-family: var(--serif);
-  background: radial-gradient(circle at top, #f6ede5 0%, #fdfaf6 55%, #f7f2ed 100%);
-  color: var(--ink);
-  min-height: 100vh;
-}
-
-#root {
-  display: flex;
-  justify-content: center;
-}
-
-p {
-  margin: 0;
-}
+* { box-sizing: border-box; }
+body { margin: 0; background: #eee8e3; color: #43352f; font-family: 'Noto Serif KR', serif; }
+button { font-family: inherit; }
