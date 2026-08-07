@@ -1,10 +1,12 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import mainPhoto from './assets/main-photo.jpg'
 import subPhoto1 from './assets/sub-1.jpg'
 import subPhoto2 from './assets/sub-2.jpg'
 import subPhoto3 from './assets/sub-3.jpg'
 import subPhoto4 from './assets/sub-4.jpg'
 import './App.css'
+
+const NAVER_MAP_CLIENT_ID = 'dbc2dqh1g9'
 
 const invitation = {
   groom: '이태형',
@@ -51,6 +53,58 @@ function Photo({ src, alt, className = '' }) {
       {missing && <span>사진을 준비 중입니다</span>}
     </div>
   )
+}
+
+function NaverMap({ address, placeName }) {
+  const mapElement = useRef(null)
+  const [mapError, setMapError] = useState(false)
+
+  useEffect(() => {
+    let cancelled = false
+    const renderMap = () => {
+      if (cancelled || !mapElement.current || !window.naver?.maps) return
+      window.naver.maps.Service.geocode({ query: address }, (status, response) => {
+        if (cancelled || status !== window.naver.maps.Service.Status.OK || !response.v2.addresses.length) {
+          setMapError(true)
+          return
+        }
+        const { x, y } = response.v2.addresses[0]
+        const position = new window.naver.maps.LatLng(y, x)
+        const map = new window.naver.maps.Map(mapElement.current, {
+          center: position,
+          zoom: 16,
+          zoomControl: true,
+          zoomControlOptions: { position: window.naver.maps.Position.TOP_RIGHT },
+        })
+        new window.naver.maps.Marker({ position, map, title: placeName })
+      })
+    }
+
+    const existingScript = document.querySelector('script[data-naver-map-api]')
+    if (existingScript) {
+      if (window.naver?.maps?.Service) renderMap()
+      else existingScript.addEventListener('load', renderMap, { once: true })
+      return () => {
+        cancelled = true
+        existingScript.removeEventListener('load', renderMap)
+      }
+    }
+
+    const script = document.createElement('script')
+    script.src = `https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=${NAVER_MAP_CLIENT_ID}&submodules=geocoder`
+    script.async = true
+    script.dataset.naverMapApi = 'true'
+    script.addEventListener('load', renderMap, { once: true })
+    script.addEventListener('error', () => !cancelled && setMapError(true), { once: true })
+    document.head.appendChild(script)
+    return () => {
+      cancelled = true
+      script.removeEventListener('load', renderMap)
+    }
+  }, [address, placeName])
+
+  if (mapError) return null
+  return <div ref={mapElement} className="naver-map" aria-label={`${placeName} 지도`} />
 }
 
 function App() {
@@ -120,6 +174,7 @@ function App() {
         <p className="section-kicker">LOCATION</p>
         <h2>오시는 길</h2>
         <div className="ceremony-date"><span>2026</span><strong>11.22</strong><span>SUN 12:00 PM</span></div>
+        <NaverMap address={invitation.venue.address} placeName={invitation.venue.name} />
         <div className="venue-info">
           <strong>{invitation.venue.name}</strong>
           <p>{invitation.venue.address}</p>
