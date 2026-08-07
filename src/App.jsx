@@ -105,6 +105,7 @@ function NaverMap({ latitude, longitude, placeName }) {
 function App() {
   const [openSide, setOpenSide] = useState('')
   const [copied, setCopied] = useState('')
+  const [selectedPhoto, setSelectedPhoto] = useState(null)
 
   const copyAccount = async (account) => {
     const text = [account.bank, account.number, account.name].filter(Boolean).join(' ')
@@ -120,6 +121,13 @@ function App() {
     }
     setCopied(account.name)
     window.setTimeout(() => setCopied(''), 1800)
+  }
+
+  const movePhoto = (direction) => {
+    setSelectedPhoto((current) => {
+      const index = (current.index + direction + galleryPhotos.length) % galleryPhotos.length
+      return { src: galleryPhotos[index], index }
+    })
   }
 
   const calendarDays = Array.from({ length: 30 }, (_, index) => index + 1)
@@ -148,11 +156,13 @@ function App() {
       <section className="section gallery-section">
         <p className="section-kicker">GALLERY</p>
         <h2>우리의 순간</h2>
-        <div className="gallery-grid">
-          {galleryPhotos.map((photo, index) => (
-            <Photo key={photo} src={photo} alt={`웨딩 갤러리 사진 ${index + 1}`} />
-          ))}
-        </div>
+          <div className="gallery-grid">
+            {galleryPhotos.map((photo, index) => (
+              <button className="gallery-button" type="button" key={photo} onClick={() => setSelectedPhoto({ src: photo, index })} aria-label={`갤러리 사진 ${index + 1} 크게 보기`}>
+                <Photo src={photo} alt={`웨딩 갤러리 사진 ${index + 1}`} />
+              </button>
+            ))}
+          </div>
       </section>
 
       <section className="section calendar-section">
@@ -209,6 +219,15 @@ function App() {
           })}
         </div>
       </section>
+
+      {selectedPhoto && (
+        <div className="gallery-modal" role="dialog" aria-modal="true" aria-label="확대된 갤러리 사진" onClick={(event) => event.target === event.currentTarget && setSelectedPhoto(null)}>
+          <button className="gallery-modal-close" type="button" onClick={() => setSelectedPhoto(null)} aria-label="사진 닫기">×</button>
+          <button className="gallery-modal-nav gallery-modal-prev" type="button" onClick={() => movePhoto(-1)} aria-label="이전 사진">‹</button>
+          <img src={selectedPhoto.src} alt={`웨딩 갤러리 사진 ${selectedPhoto.index + 1}`} />
+          <button className="gallery-modal-nav gallery-modal-next" type="button" onClick={() => movePhoto(1)} aria-label="다음 사진">›</button>
+        </div>
+      )}
 
       <footer>Thank you for celebrating with us</footer>
     </main>
