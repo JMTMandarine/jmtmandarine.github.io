@@ -30,16 +30,16 @@ const invitation = {
     {
       side: '신랑측',
       accounts: [
-        { name: '신랑 이태형', bank: '기업은행', number: '514-030287-01-011' },
-        { name: '이상길', bank: '신한은행', number: '51404322446' },
-        { name: '주진순', bank: '기업은행', number: '01079170089' },
+        { name: '이태형', bank: '기업', number: '514-030287-01-011' },
+        { name: '이상길', bank: '신한', number: '51404322446' },
+        { name: '주진순', bank: '기업', number: '167-136213-01-011' },
       ],
     },
     {
       side: '신부측',
       accounts: [
-        { name: '신부 최주리', bank: '국민은행', number: '362-21-0413-381' },
-        { name: '김은숙', bank: '국민은행', number: '040002-04-052632' },
+        { name: '최주리', bank: '국민', number: '362-21-0413-381' },
+        { name: '김은숙', bank: '국민', number: '040002-04-052632' },
       ],
     },
   ],
