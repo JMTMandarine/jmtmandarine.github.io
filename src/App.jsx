@@ -146,6 +146,13 @@ function App() {
         <div className="names"><span>신랑 이태형</span><b>·</b><span>신부 최주리</span></div>
       </section>
 
+      <section className="family-section">
+        <div className="family-names">
+          <p>이상길 주진순의 아들 <strong>이태형</strong></p>
+          <p>김은숙의 딸 <strong>최주리</strong></p>
+        </div>
+      </section>
+
       <section className="section gallery-section">
           <p className="section-kicker">GALLERY</p>
           <h2>우리의 순간</h2>
