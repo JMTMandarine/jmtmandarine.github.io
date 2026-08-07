@@ -8,6 +8,7 @@ import './App.css'
 
 const NAVER_MAP_CLIENT_ID = 'dbc2dqh1g9'
 const KAKAO_JAVASCRIPT_KEY = '5d7cc473a56701173a3ff6dcdd07ffec'
+const INVITATION_URL = 'https://jmtmandarine.github.io/'
 
 const invitation = {
   groom: '이태형',
@@ -152,10 +153,10 @@ function App() {
 
   const copyInvitationUrl = async () => {
     try {
-      await navigator.clipboard.writeText(window.location.href)
+      await navigator.clipboard.writeText(INVITATION_URL)
     } catch {
       const input = document.createElement('textarea')
-      input.value = window.location.href
+      input.value = INVITATION_URL
       document.body.appendChild(input)
       input.select()
       document.execCommand('copy')
@@ -171,13 +172,13 @@ function App() {
       return
     }
 
-    const invitationUrl = window.location.href
+    const invitationUrl = INVITATION_URL
     window.Kakao.Share.sendDefault({
       objectType: 'feed',
       content: {
         title: `${invitation.groom} ♥ ${invitation.bride} 결혼합니다`,
         description: invitation.date,
-        imageUrl: new URL(mainPhoto, window.location.origin).href,
+        imageUrl: new URL(mainPhoto, INVITATION_URL).href,
         link: { mobileWebUrl: invitationUrl, webUrl: invitationUrl },
       },
       buttons: [{ title: '청첩장 보기', link: { mobileWebUrl: invitationUrl, webUrl: invitationUrl } }],
