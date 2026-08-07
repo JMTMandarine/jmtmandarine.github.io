@@ -1,4 +1,9 @@
 import { useState } from 'react'
+import mainPhoto from './assets/main-photo.jpg'
+import subPhoto1 from './assets/sub-1.jpg'
+import subPhoto2 from './assets/sub-2.jpg'
+import subPhoto3 from './assets/sub-3.jpg'
+import subPhoto4 from './assets/sub-4.jpg'
 import './App.css'
 
 const invitation = {
@@ -21,26 +26,21 @@ const invitation = {
       side: '신랑측',
       accounts: [
         { name: '신랑 이태형', bank: '기업은행', number: '514-030287-01-011' },
-        { name: '신랑 아버님', bank: '신한은행', number: '51404322446' },
-        { name: '신랑 어머님', bank: '기업은행', number: '01079170089' },
+        { name: '이상길', bank: '신한은행', number: '51404322446' },
+        { name: '주진순', bank: '기업은행', number: '01079170089' },
       ],
     },
     {
       side: '신부측',
       accounts: [
         { name: '신부 최주리', bank: '국민은행', number: '362-21-0413-381' },
-        { name: '신부 어머님', bank: '국민은행', number: '040002-04-052632' },
+        { name: '김은숙', bank: '국민은행', number: '040002-04-052632' },
       ],
     },
   ],
 }
 
-const photoPaths = [
-  '/images/wedding-main.jpg',
-  '/images/wedding-01.jpg',
-  '/images/wedding-02.jpg',
-  '/images/wedding-03.jpg',
-]
+const galleryPhotos = [subPhoto1, subPhoto2, subPhoto3, subPhoto4]
 
 function Photo({ src, alt, className = '' }) {
   const [missing, setMissing] = useState(false)
@@ -81,7 +81,7 @@ function App() {
         <p className="eyebrow">WEDDING INVITATION</p>
         <h1><span>{invitation.displayGroom}</span><i>&amp;</i><span>{invitation.displayBride}</span></h1>
         <p className="hero-message">서로의 하루를 가장 다정한 온도로<br />채워가겠습니다.</p>
-        <Photo src={photoPaths[0]} alt={`${invitation.groom}과 ${invitation.bride}의 웨딩 사진`} className="hero-photo" />
+        <Photo src={mainPhoto} alt={`${invitation.groom}과 ${invitation.bride}의 웨딩 사진`} className="hero-photo" />
         <div className="date-card">
           <strong>11. 22</strong>
           <p>{invitation.date}</p>
@@ -100,7 +100,7 @@ function App() {
         <p className="section-kicker">GALLERY</p>
         <h2>우리의 순간</h2>
         <div className="gallery-grid">
-          {photoPaths.slice(1).map((photo, index) => (
+          {galleryPhotos.map((photo, index) => (
             <Photo key={photo} src={photo} alt={`웨딩 갤러리 사진 ${index + 1}`} />
           ))}
         </div>
