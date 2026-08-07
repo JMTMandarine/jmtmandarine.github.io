@@ -44,7 +44,7 @@ const invitation = {
   ],
 }
 
-const galleryPhotos = [mainPhoto, subPhoto1, subPhoto2, subPhoto3, subPhoto4]
+const galleryPhotos = [subPhoto1, subPhoto2, subPhoto3, subPhoto4]
 
 function Photo({ src, alt, className = '' }) {
   const [missing, setMissing] = useState(false)
