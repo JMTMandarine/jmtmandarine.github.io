@@ -7,8 +7,8 @@ import subPhoto4 from './assets/sub-4.jpg'
 import './App.css'
 
 const NAVER_MAP_CLIENT_ID = 'dbc2dqh1g9'
-const KAKAO_JAVASCRIPT_KEY = '5d7cc473a56701173a3ff6dcdd07ffec'
-const INVITATION_URL = 'https://jmtmandarine.github.io/'
+const KAKAO_JAVASCRIPT_KEY = '1da565673d32b9f83b7df717ef88692a'
+const INVITATION_URL = 'https://jmtmandarine.github.io'
 
 const invitation = {
   groom: '이태형',
