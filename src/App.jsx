@@ -7,6 +7,7 @@ import subPhoto4 from './assets/sub-4.jpg'
 import './App.css'
 
 const NAVER_MAP_CLIENT_ID = 'dbc2dqh1g9'
+const KAKAO_JAVASCRIPT_KEY = '5d7cc473a56701173a3ff6dcdd07ffec'
 
 const invitation = {
   groom: '이태형',
@@ -106,6 +107,32 @@ function App() {
   const [openSide, setOpenSide] = useState('')
   const [copied, setCopied] = useState('')
   const [selectedGalleryPhoto, setSelectedGalleryPhoto] = useState(0)
+  const [shareFeedback, setShareFeedback] = useState('')
+
+  useEffect(() => {
+    const initializeKakao = () => {
+      if (window.Kakao && !window.Kakao.isInitialized()) window.Kakao.init(KAKAO_JAVASCRIPT_KEY)
+    }
+
+    if (window.Kakao) {
+      initializeKakao()
+      return undefined
+    }
+
+    const existingScript = document.querySelector('script[data-kakao-sdk]')
+    if (existingScript) {
+      existingScript.addEventListener('load', initializeKakao, { once: true })
+      return () => existingScript.removeEventListener('load', initializeKakao)
+    }
+
+    const script = document.createElement('script')
+    script.src = 'https://t1.kakaocdn.net/kakao_js_sdk/2.8.1/kakao.min.js'
+    script.async = true
+    script.dataset.kakaoSdk = 'true'
+    script.addEventListener('load', initializeKakao, { once: true })
+    document.head.appendChild(script)
+    return () => script.removeEventListener('load', initializeKakao)
+  }, [])
 
   const copyAccount = async (account) => {
     const text = [account.bank, account.number, account.name].filter(Boolean).join(' ')
@@ -121,6 +148,40 @@ function App() {
     }
     setCopied(account.name)
     window.setTimeout(() => setCopied(''), 1800)
+  }
+
+  const copyInvitationUrl = async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href)
+    } catch {
+      const input = document.createElement('textarea')
+      input.value = window.location.href
+      document.body.appendChild(input)
+      input.select()
+      document.execCommand('copy')
+      input.remove()
+    }
+    setShareFeedback('청첩장 링크를 복사했습니다.')
+    window.setTimeout(() => setShareFeedback(''), 1800)
+  }
+
+  const shareKakao = () => {
+    if (!window.Kakao?.Share) {
+      copyInvitationUrl()
+      return
+    }
+
+    const invitationUrl = window.location.href
+    window.Kakao.Share.sendDefault({
+      objectType: 'feed',
+      content: {
+        title: `${invitation.groom} ♥ ${invitation.bride} 결혼합니다`,
+        description: invitation.date,
+        imageUrl: new URL(mainPhoto, window.location.origin).href,
+        link: { mobileWebUrl: invitationUrl, webUrl: invitationUrl },
+      },
+      buttons: [{ title: '청첩장 보기', link: { mobileWebUrl: invitationUrl, webUrl: invitationUrl } }],
+    })
   }
 
   const calendarDays = Array.from({ length: 30 }, (_, index) => index + 1)
@@ -219,6 +280,16 @@ function App() {
             </div>
           })}
         </div>
+      </section>
+
+      <section className="section share-section">
+        <p className="section-kicker">SHARE</p>
+        <h2>함께 나누기</h2>
+        <div className="share-actions">
+          <button className="kakao-share-button" type="button" onClick={shareKakao}>카카오톡 공유</button>
+          <button className="url-copy-button" type="button" onClick={copyInvitationUrl}>URL 복사</button>
+        </div>
+        {shareFeedback && <p className="share-feedback" role="status">{shareFeedback}</p>}
       </section>
 
       <footer>Thank you for celebrating with us</footer>
