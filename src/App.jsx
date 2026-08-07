@@ -4,6 +4,8 @@ import './App.css'
 const invitation = {
   groom: '이태형',
   bride: '최주리',
+  displayGroom: '태형',
+  displayBride: '주리',
   date: '2026년 11월 22일 (일) 오후 12시 00분',
   venue: {
     name: '엔씨 알앤디센터 지하 1층 컨벤션홀',
@@ -26,8 +28,8 @@ const invitation = {
     {
       side: '신부측',
       accounts: [
-        { name: '신부 최주리', pending: true },
-        { name: '신부 어머님', pending: true },
+        { name: '신부 최주리', bank: '국민은행', number: '362-21-0413-381' },
+        { name: '신부 어머님', bank: '국민은행', number: '040002-04-052632' },
       ],
     },
   ],
@@ -56,7 +58,7 @@ function App() {
   const [copied, setCopied] = useState('')
 
   const copyAccount = async (account) => {
-    const text = `${account.bank} ${account.number} ${account.name}`
+    const text = [account.bank, account.number, account.name].filter(Boolean).join(' ')
     try {
       await navigator.clipboard.writeText(text)
     } catch {
@@ -77,7 +79,7 @@ function App() {
     <main className="invitation">
       <section className="hero">
         <p className="eyebrow">WEDDING INVITATION</p>
-        <h1><span>{invitation.groom}</span><i>&amp;</i><span>{invitation.bride}</span></h1>
+        <h1><span>{invitation.displayGroom}</span><i>&amp;</i><span>{invitation.displayBride}</span></h1>
         <p className="hero-message">서로의 하루를 가장 다정한 온도로<br />채워가겠습니다.</p>
         <Photo src={photoPaths[0]} alt={`${invitation.groom}과 ${invitation.bride}의 웨딩 사진`} className="hero-photo" />
         <div className="date-card">
@@ -148,7 +150,7 @@ function App() {
               {isOpen && <div className="account-list">
                 {group.accounts.map((account) => (
                   <div className="account-item" key={account.name}>
-                    <div><small>{account.name}</small>{account.pending ? <strong className="pending">추후 추가 예정</strong> : <strong>{account.bank} {account.number}</strong>}</div>
+                    <div><small>{account.name}</small>{account.pending ? <strong className="pending">추후 추가 예정</strong> : <strong>{[account.bank, account.number].filter(Boolean).join(' ')}</strong>}</div>
                     {!account.pending && <button type="button" onClick={() => copyAccount(account)}>{copied === account.name ? '복사됨' : '복사'}</button>}
                   </div>
                 ))}
