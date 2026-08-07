@@ -44,7 +44,7 @@ const invitation = {
   ],
 }
 
-const galleryPhotos = [subPhoto1, subPhoto2, subPhoto3, subPhoto4]
+const galleryPhotos = [mainPhoto, subPhoto1, subPhoto2, subPhoto3, subPhoto4]
 
 function Photo({ src, alt, className = '' }) {
   const [missing, setMissing] = useState(false)
@@ -105,7 +105,7 @@ function NaverMap({ latitude, longitude, placeName }) {
 function App() {
   const [openSide, setOpenSide] = useState('')
   const [copied, setCopied] = useState('')
-  const [showAllPhotos, setShowAllPhotos] = useState(false)
+  const [selectedGalleryPhoto, setSelectedGalleryPhoto] = useState(0)
 
   const copyAccount = async (account) => {
     const text = [account.bank, account.number, account.name].filter(Boolean).join(' ')
@@ -124,7 +124,6 @@ function App() {
   }
 
   const calendarDays = Array.from({ length: 30 }, (_, index) => index + 1)
-  const visibleGalleryPhotos = showAllPhotos ? galleryPhotos : galleryPhotos.slice(0, 3)
 
   return (
     <main className="invitation">
@@ -148,14 +147,16 @@ function App() {
       </section>
 
       <section className="section gallery-section">
-        <p className="section-kicker">GALLERY</p>
+          <p className="section-kicker">GALLERY</p>
           <h2>우리의 순간</h2>
+          <Photo src={galleryPhotos[selectedGalleryPhoto]} alt={`웨딩 갤러리 사진 ${selectedGalleryPhoto + 1}`} className="gallery-featured-photo" />
           <div className="gallery-grid">
-            {visibleGalleryPhotos.map((photo, index) => (
-              <Photo key={photo} src={photo} alt={`웨딩 갤러리 사진 ${index + 1}`} />
+            {galleryPhotos.map((photo, index) => (
+              <button className={`gallery-thumbnail ${selectedGalleryPhoto === index ? 'is-selected' : ''}`} type="button" key={photo} onClick={() => setSelectedGalleryPhoto(index)} aria-label={`갤러리 사진 ${index + 1} 선택`} aria-pressed={selectedGalleryPhoto === index}>
+                <Photo src={photo} alt="" />
+              </button>
             ))}
           </div>
-          {galleryPhotos.length > 3 && !showAllPhotos && <button className="gallery-more-button" type="button" onClick={() => setShowAllPhotos(true)}>사진 더보기</button>}
       </section>
 
       <section className="section calendar-section">
