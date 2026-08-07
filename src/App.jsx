@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import mainPhoto from './assets/main-photo.jpg'
 import subPhoto1 from './assets/sub-1.jpg'
-import subPhoto2 from './assets/sub-2.jpg'
 import subPhoto3 from './assets/sub-3.jpg'
 import subPhoto4 from './assets/sub-4.jpg'
 import './App.css'
@@ -46,7 +45,7 @@ const invitation = {
   ],
 }
 
-const galleryPhotos = [subPhoto1, subPhoto2, subPhoto3, subPhoto4]
+const galleryPhotos = [subPhoto1, subPhoto3, subPhoto4]
 
 function Photo({ src, alt, className = '' }) {
   const [missing, setMissing] = useState(false)
