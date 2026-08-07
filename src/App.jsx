@@ -210,8 +210,8 @@ function App() {
 
       <section className="family-section">
         <div className="family-names">
-          <p><strong>이상길 · 주진순</strong>의 아들 <strong>이태형</strong></p>
-          <p><strong>김은숙</strong>의 딸 <strong>최주리</strong></p>
+          <p><strong>신랑 이태형</strong></p>
+          <p><strong>신부 최주리</strong></p>
         </div>
       </section>
 
